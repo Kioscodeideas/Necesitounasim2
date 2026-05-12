@@ -1,0 +1,2349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eSIM · Conectado en cualquier destino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black:   #0f0f0f;
+  --white:   #fafaf8;
+  --green:   #1a6b4a;
+  --green-l: #e8f2ed;
+  --green-m: #c2ddd0;
+  --sand:    #f0ece3;
+  --sand-d:  #d8d2c4;
+  --gray:    #888880;
+  --mono: 'JetBrains Mono', monospace;
+  --display: 'Bebas Neue', sans-serif;
+  --body: 'Archivo', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--body);
+  background: var(--white);
+  color: var(--black);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 200;
+  background: var(--black);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 54px;
+  border-bottom: 2px solid var(--green);
+}
+
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--white);
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-logo-signal {
+  display: flex; gap: 3px; align-items: flex-end; height: 14px;
+}
+.nav-logo-signal span {
+  width: 3px; background: var(--green); border-radius: 1px;
+  animation: signal 1.4s ease-in-out infinite;
+}
+.nav-logo-signal span:nth-child(1) { height: 5px; animation-delay: 0s; }
+.nav-logo-signal span:nth-child(2) { height: 9px; animation-delay: 0.15s; }
+.nav-logo-signal span:nth-child(3) { height: 14px; animation-delay: 0.3s; }
+@keyframes signal {
+  0%,100% { opacity: 0.3; } 50% { opacity: 1; }
+}
+
+.nav-links {
+  display: flex; gap: 36px;
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: #888;
+}
+.nav-links a { text-decoration: none; color: inherit; transition: color 0.15s; }
+.nav-links a:hover { color: var(--white); }
+
+.nav-right {
+  display: flex; align-items: center; gap: 16px;
+}
+.nav-badge {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--green); border: 1px solid var(--green);
+  padding: 4px 10px;
+}
+.nav-cta {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  background: var(--green); color: var(--white);
+  border: none; padding: 9px 20px; cursor: pointer;
+  transition: background 0.15s;
+}
+.nav-cta:hover { background: #145538; }
+
+/* ── TICKER ── */
+.ticker {
+  background: var(--sand); border-bottom: 1px solid var(--sand-d);
+  overflow: hidden; white-space: nowrap; padding: 8px 0;
+}
+.ticker-track {
+  display: inline-flex; animation: tick 30s linear infinite;
+}
+.ticker-item {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gray); padding: 0 28px;
+  display: flex; align-items: center; gap: 10px;
+}
+.ticker-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+@keyframes tick { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* ── HERO WRAPPER ── */
+.hero {
+  display: grid;
+  grid-template-rows: auto auto;
+  background: var(--white);
+}
+
+/* ── HERO TOP — titular + países rápidos ── */
+.hero-top {
+  padding: 60px 48px 0;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 40px;
+  align-items: start;
+}
+
+.hero-headline {
+  padding-top: 8px;
+}
+
+.hero-pretag {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-pretag::before {
+  content: '';
+  display: inline-block; width: 24px; height: 2px;
+  background: var(--green);
+}
+
+h1 {
+  font-family: var(--display);
+  font-size: clamp(80px, 10vw, 130px);
+  line-height: 0.9; letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+h1 em { color: var(--green); font-style: normal; }
+
+.hero-copy {
+  font-size: 16px; color: #555; line-height: 1.65;
+  max-width: 400px; margin-bottom: 28px;
+}
+
+/* países rápidos destinos populares */
+.quick-dest {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.qdest {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border: 1px solid var(--sand-d); padding: 6px 14px;
+  cursor: pointer; color: var(--gray);
+  transition: all 0.15s; background: var(--white);
+}
+.qdest:hover, .qdest.active {
+  border-color: var(--green); color: var(--green);
+  background: var(--green-l);
+}
+
+/* ── BOARDING PASS lateral ── */
+.hero-pass {
+  position: relative; padding-top: 0;
+}
+
+.pass-card {
+  background: var(--white);
+  border: 1.5px solid var(--black);
+  position: relative;
+  transform: rotate(1.2deg);
+  transition: transform 0.3s ease;
+  box-shadow: 4px 4px 0 var(--black);
+}
+.pass-card:hover { transform: rotate(0deg); }
+
+.pass-stripe {
+  background: var(--green); height: 10px;
+}
+
+.pass-header {
+  padding: 14px 18px 10px;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  border-bottom: 1px solid #eee;
+}
+.pass-type {
+  font-family: var(--mono); font-size: 8px;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray);
+}
+.pass-status {
+  font-family: var(--mono); font-size: 8px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--green); border: 1px solid var(--green);
+  padding: 2px 8px;
+}
+
+.pass-route {
+  padding: 16px 18px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.pass-iata {
+  font-family: var(--display); font-size: 54px;
+  letter-spacing: 0.02em; line-height: 1;
+}
+.pass-arrow {
+  font-size: 22px; color: var(--green);
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.pass-route-line {
+  width: 50px; height: 1px;
+  background: repeating-linear-gradient(90deg, var(--sand-d) 0, var(--sand-d) 4px, transparent 4px, transparent 8px);
+}
+
+.pass-iata-label {
+  font-family: var(--mono); font-size: 8px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray);
+  margin-top: 2px;
+}
+
+.pass-fields {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  border-top: 1px solid #eee;
+}
+.pass-field {
+  padding: 10px 14px;
+  border-right: 1px solid #eee;
+}
+.pass-field:last-child { border-right: none; }
+.pass-field label {
+  display: block; font-family: var(--mono); font-size: 7px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--gray); margin-bottom: 3px;
+}
+.pass-field span {
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+}
+.pass-field span.green { color: var(--green); }
+
+.pass-tear {
+  position: relative; margin: 0 -2px;
+  border-top: 1.5px dashed #ddd;
+}
+.pass-tear::before, .pass-tear::after {
+  content: ''; position: absolute; top: -9px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--white); border: 1.5px solid var(--black);
+}
+.pass-tear::before { left: -9px; }
+.pass-tear::after { right: -9px; }
+
+.pass-barcode {
+  padding: 14px 18px 12px;
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+}
+.barcode-svg { display: block; }
+.pass-ref {
+  font-family: var(--mono); font-size: 7px;
+  letter-spacing: 0.25em; color: var(--gray);
+  text-transform: uppercase;
+}
+
+/* ── SELECTOR — la pieza clave ── */
+.hero-selector-wrap {
+  background: var(--black);
+  margin: 40px 48px 0;
+  padding: 32px 36px 28px;
+  position: relative;
+}
+
+.selector-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px;
+}
+.selector-title {
+  font-family: var(--display);
+  font-size: 32px; letter-spacing: 0.05em;
+  text-transform: uppercase; color: var(--white);
+}
+.selector-title em { color: var(--green); font-style: normal; }
+.selector-step {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.15em; text-transform: uppercase; color: #555;
+}
+
+.selector-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0;
+  align-items: end;
+}
+
+.sel-group {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.sel-group label {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.18em; text-transform: uppercase; color: #666;
+}
+
+.sel-control {
+  background: #1a1a1a; border: 1px solid #333;
+  color: var(--white); padding: 0 16px;
+  height: 56px;
+  font-family: var(--mono); font-size: 15px; font-weight: 700;
+  letter-spacing: 0.04em;
+  appearance: none; outline: none; cursor: pointer;
+  transition: border-color 0.15s;
+  border-right: none;
+}
+.sel-control:focus { border-color: var(--green); }
+.sel-control option { background: #1a1a1a; }
+
+.sel-divider {
+  background: #222; border: 1px solid #333; border-left: none; border-right: none;
+  height: 56px; display: flex; align-items: center; padding: 0 16px;
+  color: var(--green); font-size: 20px; font-weight: 700;
+}
+
+.sel-btn {
+  background: var(--green); color: var(--white);
+  border: none; height: 56px; padding: 0 36px;
+  font-family: var(--mono); font-size: 12px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  cursor: pointer; transition: background 0.15s, letter-spacing 0.2s;
+  white-space: nowrap;
+}
+.sel-btn:hover { background: #145538; letter-spacing: 0.2em; }
+
+.selector-hint-row {
+  margin-top: 14px;
+  display: flex; align-items: center; gap: 12px;
+}
+.sel-hint {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: #444; transition: color 0.3s;
+}
+.sel-hint.active { color: var(--green); }
+.sel-hint-sep { width: 20px; height: 1px; background: #333; }
+.sel-popular {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.sel-pop-tag {
+  font-family: var(--mono); font-size: 8px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border: 1px solid #333; color: #555; padding: 3px 10px;
+  cursor: pointer; transition: all 0.15s;
+}
+.sel-pop-tag:hover { border-color: var(--green); color: var(--green); }
+
+/* ── DESTINOS POPULARES (bajo selector) ── */
+.popular-strip {
+  border-top: 1px solid var(--sand-d); border-bottom: 1px solid var(--sand-d);
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.pop-dest {
+  padding: 20px 24px;
+  border-right: 1px solid var(--sand-d);
+  cursor: pointer; transition: background 0.15s;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.pop-dest:last-child { border-right: none; }
+.pop-dest:hover { background: var(--green-l); }
+
+.pop-flag { font-size: 22px; margin-bottom: 4px; }
+.pop-country {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  font-weight: 700; color: var(--black);
+}
+.pop-desde {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--gray); letter-spacing: 0.08em;
+}
+.pop-desde strong { color: var(--green); }
+
+/* ── TRUST ROW ── */
+.trust-row {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 2px solid var(--black);
+}
+.trust-cell {
+  padding: 24px 32px;
+  border-right: 1px solid var(--sand-d);
+  display: flex; align-items: center; gap: 14px;
+}
+.trust-cell:last-child { border-right: none; }
+.trust-num {
+  font-family: var(--display); font-size: 36px;
+  color: var(--green); line-height: 1;
+}
+.trust-txt label {
+  display: block; font-family: var(--mono); font-size: 8px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gray); margin-bottom: 2px;
+}
+.trust-txt span {
+  font-size: 13px; font-weight: 600; color: var(--black);
+}
+
+/* ── BLOQUE 02 — PLANES ── */
+#planes-section {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease;
+  opacity: 0;
+  background: var(--sand);
+  border-top: 2px solid var(--black);
+}
+#planes-section.visible {
+  max-height: 2000px; opacity: 1;
+}
+
+.planes-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding: 40px 48px 28px;
+  border-bottom: 1px solid var(--sand-d);
+}
+.planes-pretag {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 6px;
+}
+.planes-titulo {
+  font-family: var(--display); font-size: 40px;
+  letter-spacing: 0.02em; text-transform: uppercase;
+  line-height: 1; margin-bottom: 6px;
+}
+.planes-sub {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.1em; color: var(--gray);
+  text-transform: uppercase;
+}
+.planes-back {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  background: transparent; color: var(--gray);
+  border: 1px solid var(--sand-d); padding: 10px 18px;
+  cursor: pointer; transition: all 0.15s; white-space: nowrap;
+  margin-top: 4px;
+}
+.planes-back:hover { border-color: var(--black); color: var(--black); }
+
+.planes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0;
+  padding: 32px 48px 48px;
+  gap: 20px;
+}
+
+.plan-card {
+  background: var(--white);
+  border: 1.5px solid var(--black);
+  padding: 24px;
+  position: relative;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.plan-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 4px 4px 0 var(--black);
+}
+.plan-featured {
+  background: var(--black); color: var(--white);
+  border-color: var(--black);
+}
+.plan-badge {
+  position: absolute; top: -1px; right: 20px;
+  background: var(--green); color: var(--white);
+  font-family: var(--mono); font-size: 8px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 4px 12px;
+}
+.plan-card-top {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.plan-tag {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--gray);
+}
+.plan-featured .plan-tag { color: #666; }
+.plan-proveedor {
+  font-family: var(--mono); font-size: 8px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--green); border: 1px solid var(--green);
+  padding: 2px 8px;
+}
+.plan-nombre {
+  font-family: var(--display); font-size: 36px;
+  letter-spacing: 0.02em; line-height: 1;
+}
+.plan-specs {
+  display: flex; align-items: center; gap: 0;
+  border: 1px solid; border-color: var(--sand-d);
+  padding: 10px 0;
+}
+.plan-featured .plan-specs { border-color: #333; }
+.plan-spec {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; gap: 3px; padding: 0 12px;
+}
+.spec-val {
+  font-family: var(--mono); font-size: 13px; font-weight: 700;
+}
+.spec-lbl {
+  font-family: var(--mono); font-size: 7px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--gray);
+}
+.plan-featured .spec-lbl { color: #666; }
+.red-tag { color: var(--green); font-size: 10px !important; }
+.plan-spec-div {
+  width: 1px; height: 32px; background: var(--sand-d);
+  flex-shrink: 0;
+}
+.plan-featured .plan-spec-div { background: #333; }
+.plan-desc {
+  font-size: 13px; line-height: 1.55; color: #555;
+  flex: 1;
+}
+.plan-featured .plan-desc { color: #aaa; }
+.plan-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 14px; border-top: 1px solid var(--sand-d);
+}
+.plan-featured .plan-footer { border-top-color: #333; }
+.plan-precio { display: flex; align-items: baseline; gap: 4px; }
+.precio-num {
+  font-family: var(--display); font-size: 38px; line-height: 1;
+  color: var(--green);
+}
+.precio-unit {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--gray); letter-spacing: 0.1em;
+}
+.plan-cta {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  background: var(--black); color: var(--white);
+  border: none; padding: 12px 22px; cursor: pointer;
+  transition: background 0.15s, letter-spacing 0.2s;
+}
+.plan-cta:hover { background: var(--green); letter-spacing: 0.18em; }
+.plan-cta-featured {
+  background: var(--green);
+}
+.plan-cta-featured:hover { background: #145538; }
+.plan-check-row {
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+.plan-check-row span {
+  font-family: var(--mono); font-size: 8px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--green);
+}
+.plan-featured .plan-check-row span { color: #4a9e7a; }
+
+@media (max-width: 860px) {
+  .planes-header { flex-direction: column; gap: 16px; padding: 28px 20px 20px; }
+  .planes-grid { padding: 20px; grid-template-columns: 1fr; }
+}
+
+
+/* ── BLOQUE 03 — CÓMO FUNCIONA ── */
+.como-section {
+  background: var(--white);
+  border-top: 2px solid var(--black);
+}
+.como-header {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--sand-d);
+}
+.como-header-left {
+  padding: 40px 48px;
+  border-right: 1px solid var(--sand-d);
+}
+.como-pretag {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.como-pretag::before {
+  content: ''; display: inline-block;
+  width: 20px; height: 2px; background: var(--green);
+}
+.como-titulo {
+  font-family: var(--display); font-size: 52px;
+  line-height: 0.92; text-transform: uppercase; letter-spacing: 0.01em;
+}
+.como-header-right {
+  padding: 40px 48px; display: flex; align-items: center;
+}
+.como-copy {
+  font-size: 15px; color: #555; line-height: 1.7; max-width: 380px;
+}
+.como-pasos {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+}
+.como-paso {
+  padding: 36px 36px 40px; border-right: 1px solid var(--sand-d);
+  position: relative; transition: background 0.2s;
+}
+.como-paso:last-child { border-right: none; }
+.como-paso:hover { background: var(--green-l); }
+.paso-num {
+  font-family: var(--display); font-size: 64px;
+  line-height: 1; color: var(--sand-d); margin-bottom: 20px;
+  transition: color 0.2s;
+}
+.como-paso:hover .paso-num { color: var(--green-m); }
+.paso-icon { font-size: 28px; margin-bottom: 14px; display: block; }
+.paso-titulo {
+  font-family: var(--mono); font-size: 12px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 10px; color: var(--black);
+}
+.paso-desc { font-size: 13px; color: #666; line-height: 1.6; }
+.paso-arrow {
+  position: absolute; top: 36px; right: -14px;
+  width: 28px; height: 28px;
+  background: var(--white); border: 1.5px solid var(--sand-d);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--green); z-index: 2; font-weight: 700;
+}
+.como-paso:last-child .paso-arrow { display: none; }
+.compat-row {
+  border-top: 1px solid var(--sand-d);
+  display: grid; grid-template-columns: repeat(3, 1fr);
+}
+.compat-cell {
+  padding: 22px 36px; border-right: 1px solid var(--sand-d);
+  display: flex; align-items: center; gap: 14px;
+}
+.compat-cell:last-child { border-right: none; }
+.compat-icon { font-size: 22px; }
+.compat-txt label {
+  display: block; font-family: var(--mono); font-size: 8px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gray); margin-bottom: 2px;
+}
+.compat-txt span { font-size: 13px; font-weight: 600; }
+.como-footer {
+  background: var(--black);
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: center; padding: 24px 48px; gap: 32px;
+  border-top: 1px solid #222;
+}
+.como-footer-txt {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: #666;
+}
+.como-footer-txt strong { color: var(--white); }
+.como-footer-cta {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  background: var(--green); color: var(--white);
+  border: none; padding: 14px 32px; cursor: pointer;
+  transition: background 0.15s, letter-spacing 0.2s; white-space: nowrap;
+}
+.como-footer-cta:hover { background: #145538; letter-spacing: 0.2em; }
+
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  animation: revealUp 0.55s ease forwards;
+}
+.reveal:nth-child(1) { animation-delay: 0.05s; }
+.reveal:nth-child(2) { animation-delay: 0.15s; }
+.reveal:nth-child(3) { animation-delay: 0.25s; }
+.reveal:nth-child(4) { animation-delay: 0.35s; }
+.reveal:nth-child(5) { animation-delay: 0.45s; }
+
+@keyframes revealUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 860px) {
+  .hero-top { grid-template-columns: 1fr; }
+  .hero-pass { display: none; }
+  .selector-fields { grid-template-columns: 1fr; }
+  .sel-control { border-right: 1px solid #333; }
+  .sel-divider { display: none; }
+  .sel-btn { width: 100%; justify-content: center; }
+  .popular-strip { grid-template-columns: repeat(3, 1fr); }
+  .trust-row { grid-template-columns: 1fr 1fr; }
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .hero-top, .hero-selector-wrap { padding-left: 20px; padding-right: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-signal">
+      <span></span><span></span><span></span>
+    </div>
+    SIMPASS
+  </div>
+  <div class="nav-links">
+    <a href="#">Destinos</a>
+    <a href="#">¿Qué es eSIM?</a>
+    <a href="#">Cómo funciona</a>
+    <a href="#">FAQ</a>
+  </div>
+  <div class="nav-right">
+    <div class="nav-badge">✓ Activación instantánea</div>
+    <button class="nav-cta">Ver planes →</button>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <div class="ticker-item"><div class="ticker-dot"></div>Europa desde 9€</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>Japón · Red 4G/LTE</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>Sin roaming · Sin sorpresas</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>190+ países cubiertos</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>Actívala en 2 minutos</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>Compatible iPhone y Android</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>América desde 14€</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>Asia desde 12€</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>Europa desde 9€</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>Japón · Red 4G/LTE</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>Sin roaming · Sin sorpresas</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>190+ países cubiertos</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>Actívala en 2 minutos</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>Compatible iPhone y Android</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>América desde 14€</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>Asia desde 12€</div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+
+  <div class="hero-top">
+
+    <!-- TITULAR -->
+    <div class="hero-headline">
+      <div class="hero-pretag reveal">eSIM · Datos móviles sin fronteras</div>
+      <h1 class="reveal">
+        VIAJA<br>
+        SIEMPRE<br>
+        <em>CONECTADO</em>
+      </h1>
+      <p class="hero-copy reveal">
+        Elige tu destino, elige tus días. Te encontramos el mejor plan de datos al instante — sin contratos, sin roaming, sin líos.
+      </p>
+      <div class="quick-dest reveal" id="quick-dest">
+        <span class="qdest" data-val="eu-eu" data-days="7">🇪🇺 Europa</span>
+        <span class="qdest" data-val="as-jp" data-days="14">🇯🇵 Japón</span>
+        <span class="qdest" data-val="am-us" data-days="10">🇺🇸 EE.UU.</span>
+        <span class="qdest" data-val="as-th" data-days="10">🇹🇭 Tailandia</span>
+        <span class="qdest" data-val="me-ae" data-days="7">🇦🇪 Dubai</span>
+        <span class="qdest" data-val="am-mx" data-days="7">🇲🇽 México</span>
+      </div>
+    </div>
+
+    <!-- BOARDING PASS -->
+    <div class="hero-pass reveal">
+      <div class="pass-card" id="pass-card">
+        <div class="pass-stripe"></div>
+        <div class="pass-header">
+          <div class="pass-type">eSIM · Data Pass</div>
+          <div class="pass-status">● ACTIVA</div>
+        </div>
+        <div class="pass-route">
+          <div>
+            <div class="pass-iata" id="p-origin">ESP</div>
+            <div class="pass-iata-label">España</div>
+          </div>
+          <div class="pass-arrow">
+            <span>✈</span>
+            <div class="pass-route-line"></div>
+          </div>
+          <div style="text-align:right">
+            <div class="pass-iata" id="p-dest">JPN</div>
+            <div class="pass-iata-label" id="p-dest-name" style="text-align:right">Japón</div>
+          </div>
+        </div>
+        <div class="pass-fields">
+          <div class="pass-field">
+            <label>Plan</label>
+            <span class="green" id="p-plan">ASIA·10</span>
+          </div>
+          <div class="pass-field">
+            <label>Datos</label>
+            <span id="p-data">10 GB</span>
+          </div>
+          <div class="pass-field">
+            <label>Días</label>
+            <span id="p-days">30d</span>
+          </div>
+        </div>
+        <div class="pass-tear"></div>
+        <div class="pass-barcode">
+          <svg class="barcode-svg" width="240" height="40" id="barcode-svg"></svg>
+          <div class="pass-ref" id="p-ref">SIM · 2025 · AS · JP · 0047</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SELECTOR GRANDE -->
+  <div class="hero-selector-wrap">
+    <div class="selector-header">
+      <div class="selector-title">¿A dónde <em>viajas</em>?</div>
+      <div class="selector-step">PASO 1 DE 2 — ELIGE DESTINO Y DÍAS</div>
+    </div>
+
+    <div class="selector-fields">
+      <div class="sel-group">
+        <label>¿A qué país vas?</label>
+        <select class="sel-control" id="dest-select">
+          <option value="">— Selecciona destino —</option>
+          <optgroup label="🌍 Europa">
+            <option value="eu-eu">Europa completa (40+ países)</option>
+            <option value="eu-fr">Francia</option>
+            <option value="eu-it">Italia</option>
+            <option value="eu-de">Alemania</option>
+            <option value="eu-pt">Portugal</option>
+            <option value="eu-uk">Reino Unido</option>
+            <option value="eu-gr">Grecia</option>
+            <option value="eu-nl">Países Bajos</option>
+          </optgroup>
+          <optgroup label="🌏 Asia">
+            <option value="as-jp">Japón</option>
+            <option value="as-th">Tailandia</option>
+            <option value="as-id">Indonesia · Bali</option>
+            <option value="as-vn">Vietnam</option>
+            <option value="as-sg">Singapur</option>
+            <option value="as-kr">Corea del Sur</option>
+            <option value="as-in">India</option>
+          </optgroup>
+          <optgroup label="🌎 América">
+            <option value="am-us">Estados Unidos</option>
+            <option value="am-mx">México</option>
+            <option value="am-co">Colombia</option>
+            <option value="am-ar">Argentina</option>
+            <option value="am-br">Brasil</option>
+            <option value="am-pe">Perú</option>
+          </optgroup>
+          <optgroup label="🌍 África y Oriente Medio">
+            <option value="af-ma">Marruecos</option>
+            <option value="af-eg">Egipto</option>
+            <option value="me-ae">Emiratos · Dubai</option>
+            <option value="me-tr">Turquía</option>
+          </optgroup>
+          <optgroup label="🌐 Global">
+            <option value="gl-all">Todo el mundo (190+ países)</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="sel-group">
+        <label>¿Cuántos días?</label>
+        <select class="sel-control" id="days-select" style="border-left:none;">
+          <option value="">— Número de días —</option>
+          <option value="3">Hasta 3 días</option>
+          <option value="7">1 semana (7 días)</option>
+          <option value="14">2 semanas (14 días)</option>
+          <option value="21">3 semanas (21 días)</option>
+          <option value="30">1 mes (30 días)</option>
+          <option value="60">2 meses (60 días)</option>
+          <option value="90">3 meses (90 días)</option>
+        </select>
+      </div>
+
+      <div class="sel-divider">→</div>
+
+      <button class="sel-btn" onclick="buscarPlan()">
+        Buscar plan →
+      </button>
+    </div>
+
+    <div class="selector-hint-row">
+      <div class="sel-hint" id="sel-hint">Selecciona destino y días para ver el plan ideal</div>
+      <div class="sel-hint-sep"></div>
+      <div class="sel-popular">
+        <span class="sel-pop-tag" onclick="setDest('as-jp','14')">Japón · 14d</span>
+        <span class="sel-pop-tag" onclick="setDest('eu-eu','7')">Europa · 7d</span>
+        <span class="sel-pop-tag" onclick="setDest('am-us','10')">EE.UU. · 10d</span>
+        <span class="sel-pop-tag" onclick="setDest('as-th','14')">Tailandia · 14d</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESTINOS POPULARES -->
+  <div class="popular-strip">
+    <div class="pop-dest" onclick="setDest('eu-eu','7')">
+      <div class="pop-flag">🌍</div>
+      <div class="pop-country">Europa</div>
+      <div class="pop-desde">desde <strong>9€</strong></div>
+    </div>
+    <div class="pop-dest" onclick="setDest('as-jp','14')">
+      <div class="pop-flag">🇯🇵</div>
+      <div class="pop-country">Japón</div>
+      <div class="pop-desde">desde <strong>18€</strong></div>
+    </div>
+    <div class="pop-dest" onclick="setDest('am-us','10')">
+      <div class="pop-flag">🇺🇸</div>
+      <div class="pop-country">EE.UU.</div>
+      <div class="pop-desde">desde <strong>19€</strong></div>
+    </div>
+    <div class="pop-dest" onclick="setDest('as-th','14')">
+      <div class="pop-flag">🇹🇭</div>
+      <div class="pop-country">Tailandia</div>
+      <div class="pop-desde">desde <strong>14€</strong></div>
+    </div>
+    <div class="pop-dest" onclick="setDest('me-ae','7')">
+      <div class="pop-flag">🇦🇪</div>
+      <div class="pop-country">Dubai</div>
+      <div class="pop-desde">desde <strong>16€</strong></div>
+    </div>
+    <div class="pop-dest" onclick="setDest('am-mx','10')">
+      <div class="pop-flag">🇲🇽</div>
+      <div class="pop-country">México</div>
+      <div class="pop-desde">desde <strong>12€</strong></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- TRUST ROW -->
+<div class="trust-row">
+  <div class="trust-cell">
+    <div class="trust-num">190+</div>
+    <div class="trust-txt">
+      <label>Cobertura</label>
+      <span>Países disponibles</span>
+    </div>
+  </div>
+  <div class="trust-cell">
+    <div class="trust-num">2'</div>
+    <div class="trust-txt">
+      <label>Activación</label>
+      <span>Lista al instante</span>
+    </div>
+  </div>
+  <div class="trust-cell">
+    <div class="trust-num">4.8★</div>
+    <div class="trust-txt">
+      <label>Valoración media</label>
+      <span>+12.000 reseñas</span>
+    </div>
+  </div>
+  <div class="trust-cell">
+    <div class="trust-num">0€</div>
+    <div class="trust-txt">
+      <label>Coste de roaming</label>
+      <span>Sin sorpresas en la factura</span>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ─── Datos de destinos ─── */
+const dests = {
+  'eu-eu': { code:'EUR', name:'Europa',        plan:'EU·10',   gb:'10 GB',  ref:'EU·ALL' },
+  'eu-fr': { code:'FRA', name:'Francia',       plan:'EU·5',    gb:'5 GB',   ref:'EU·FR'  },
+  'eu-it': { code:'ITA', name:'Italia',        plan:'EU·5',    gb:'5 GB',   ref:'EU·IT'  },
+  'eu-de': { code:'DEU', name:'Alemania',      plan:'EU·5',    gb:'5 GB',   ref:'EU·DE'  },
+  'eu-pt': { code:'PRT', name:'Portugal',      plan:'EU·5',    gb:'5 GB',   ref:'EU·PT'  },
+  'eu-uk': { code:'GBR', name:'Reino Unido',   plan:'UK·5',    gb:'5 GB',   ref:'EU·UK'  },
+  'eu-gr': { code:'GRC', name:'Grecia',        plan:'EU·5',    gb:'5 GB',   ref:'EU·GR'  },
+  'eu-nl': { code:'NLD', name:'Países Bajos',  plan:'EU·5',    gb:'5 GB',   ref:'EU·NL'  },
+  'as-jp': { code:'JPN', name:'Japón',         plan:'AS·10',   gb:'10 GB',  ref:'AS·JP'  },
+  'as-th': { code:'THA', name:'Tailandia',     plan:'AS·10',   gb:'10 GB',  ref:'AS·TH'  },
+  'as-id': { code:'IDN', name:'Indonesia',     plan:'AS·10',   gb:'10 GB',  ref:'AS·ID'  },
+  'as-vn': { code:'VNM', name:'Vietnam',       plan:'AS·5',    gb:'5 GB',   ref:'AS·VN'  },
+  'as-sg': { code:'SGP', name:'Singapur',      plan:'AS·5',    gb:'5 GB',   ref:'AS·SG'  },
+  'as-kr': { code:'KOR', name:'Corea del Sur', plan:'AS·10',   gb:'10 GB',  ref:'AS·KR'  },
+  'as-in': { code:'IND', name:'India',         plan:'AS·5',    gb:'5 GB',   ref:'AS·IN'  },
+  'am-us': { code:'USA', name:'EE.UU.',        plan:'AM·10',   gb:'10 GB',  ref:'AM·US'  },
+  'am-mx': { code:'MEX', name:'México',        plan:'AM·5',    gb:'5 GB',   ref:'AM·MX'  },
+  'am-co': { code:'COL', name:'Colombia',      plan:'AM·5',    gb:'5 GB',   ref:'AM·CO'  },
+  'am-ar': { code:'ARG', name:'Argentina',     plan:'AM·5',    gb:'5 GB',   ref:'AM·AR'  },
+  'am-br': { code:'BRA', name:'Brasil',        plan:'AM·10',   gb:'10 GB',  ref:'AM·BR'  },
+  'am-pe': { code:'PER', name:'Perú',          plan:'AM·5',    gb:'5 GB',   ref:'AM·PE'  },
+  'af-ma': { code:'MAR', name:'Marruecos',     plan:'AF·5',    gb:'5 GB',   ref:'AF·MA'  },
+  'af-eg': { code:'EGY', name:'Egipto',        plan:'AF·5',    gb:'5 GB',   ref:'AF·EG'  },
+  'me-ae': { code:'ARE', name:'Dubai',         plan:'ME·10',   gb:'10 GB',  ref:'ME·AE'  },
+  'me-tr': { code:'TUR', name:'Turquía',       plan:'ME·5',    gb:'5 GB',   ref:'ME·TR'  },
+  'gl-all':{ code:'WLD', name:'Global',        plan:'GL·∞',    gb:'Ilimit.', ref:'GL·ALL' },
+};
+
+/* ─── Barcode ─── */
+function drawBarcode() {
+  const svg = document.getElementById('barcode-svg');
+  svg.innerHTML = '';
+  const ns = 'http://www.w3.org/2000/svg';
+  const pattern = [3,1,4,1,5,2,3,1,2,4,1,3,2,1,5,1,3,2,4,1,2,3,1,4,2,1,3,5,1,2,4,1,3,2,1,4];
+  let x = 4;
+  pattern.forEach((w, i) => {
+    const r = document.createElementNS(ns, 'rect');
+    const h = i % 3 === 0 ? 40 : i % 2 === 0 ? 30 : 36;
+    r.setAttribute('x', x);
+    r.setAttribute('y', (40 - h) / 2);
+    r.setAttribute('width', w);
+    r.setAttribute('height', h);
+    r.setAttribute('fill', '#0f0f0f');
+    svg.appendChild(r);
+    x += w + (i % 2 === 0 ? 2 : 3);
+  });
+}
+drawBarcode();
+
+/* ─── Actualizar boarding pass ─── */
+function updatePass(destKey, days) {
+  const d = dests[destKey];
+  if (!d) return;
+  const el = (id) => document.getElementById(id);
+  el('p-dest').textContent     = d.code;
+  el('p-dest-name').textContent = d.name;
+  el('p-plan').textContent     = d.plan;
+  el('p-data').textContent     = d.gb;
+  el('p-days').textContent     = days ? days + 'd' : '—';
+  el('p-ref').textContent      = 'SIM · 2025 · ' + d.ref;
+
+  const card = document.getElementById('pass-card');
+  card.style.opacity = '0.5';
+  card.style.transform = 'rotate(-1.5deg) scale(0.97)';
+  setTimeout(() => {
+    card.style.transition = 'all 0.25s ease';
+    card.style.opacity = '1';
+    card.style.transform = 'rotate(1.2deg) scale(1)';
+    drawBarcode();
+  }, 180);
+
+  const hint = document.getElementById('sel-hint');
+  hint.textContent = d.name + ' · ' + d.gb + (days ? ' · ' + days + ' días' : '') + ' → Plan recomendado: ' + d.plan;
+  hint.classList.add('active');
+}
+
+/* ─── Selectores ─── */
+const destSel = document.getElementById('dest-select');
+const daysSel = document.getElementById('days-select');
+
+destSel.addEventListener('change', () => {
+  if (destSel.value) updatePass(destSel.value, daysSel.value);
+});
+daysSel.addEventListener('change', () => {
+  if (destSel.value) updatePass(destSel.value, daysSel.value);
+});
+
+/* ─── Atajos rápidos ─── */
+function setDest(destKey, days) {
+  destSel.value = destKey;
+  daysSel.value = days;
+  updatePass(destKey, days);
+  document.querySelector('.hero-selector-wrap').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  /* highlight */
+  document.querySelectorAll('.qdest').forEach(el => el.classList.remove('active'));
+  const match = document.querySelector(`.qdest[data-val="${destKey}"]`);
+  if (match) match.classList.add('active');
+}
+
+/* Quick dest chips */
+document.querySelectorAll('.qdest').forEach(el => {
+  el.addEventListener('click', () => setDest(el.dataset.val, el.dataset.days));
+});
+
+/* Destinos populares chips */
+document.querySelectorAll('.sel-pop-tag').forEach(el => {
+  el.addEventListener('click', function() {
+    const parts = this.getAttribute('onclick').match(/'([^']+)','([^']+)'/);
+    if (parts) setDest(parts[1], parts[2]);
+  });
+});
+
+/* ─── Planes por destino ─── */
+const planes = {
+  /* EUROPA */
+  'eu-eu': [
+    { tag:'Escapada', nombre:'EU · LITE', gb:'3 GB', dias:'7', precio:'9', red:'4G · Schengen', badge:'', proveedor:'Holafly', desc:'Perfecto para un fin de semana en Europa. Cubre 40+ países.' },
+    { tag:'Recomendado', nombre:'EU · PLUS', gb:'10 GB', dias:'30', precio:'19', red:'4G/5G · Schengen', badge:'MÁS POPULAR', proveedor:'Airalo', desc:'El plan que más contratan los viajeros europeos. Sin límite de velocidad.' },
+    { tag:'Nómada', nombre:'EU · MAX', gb:'Ilimitado', dias:'30', precio:'34', red:'4G/5G · Schengen', badge:'', proveedor:'Holafly', desc:'Datos ilimitados para trabajar y viajar sin preocupaciones.' },
+  ],
+  'eu-fr': [
+    { tag:'Corto', nombre:'FRA · 5', gb:'5 GB', dias:'15', precio:'11', red:'4G · Orange FR', badge:'', proveedor:'Airalo', desc:'Ideal para una semana en Francia.' },
+    { tag:'Recomendado', nombre:'FRA · 10', gb:'10 GB', dias:'30', precio:'18', red:'4G/5G · Orange FR', badge:'MÁS POPULAR', proveedor:'Holafly', desc:'El más elegido para viajes a París y toda Francia.' },
+  ],
+  'eu-it': [
+    { tag:'Corto', nombre:'ITA · 5', gb:'5 GB', dias:'15', precio:'11', red:'4G · TIM Italia', badge:'', proveedor:'Airalo', desc:'Para una semana recorriendo Italia.' },
+    { tag:'Recomendado', nombre:'ITA · 10', gb:'10 GB', dias:'30', precio:'18', red:'4G/5G · TIM Italia', badge:'MÁS POPULAR', proveedor:'Holafly', desc:'El favorito para Roma, Florencia y el norte de Italia.' },
+  ],
+  'eu-de': [
+    { tag:'Corto', nombre:'DEU · 5', gb:'5 GB', dias:'15', precio:'11', red:'4G · Telekom DE', badge:'', proveedor:'Airalo', desc:'Para una semana en Alemania.' },
+    { tag:'Recomendado', nombre:'DEU · 10', gb:'10 GB', dias:'30', precio:'18', red:'4G/5G · Telekom DE', badge:'MÁS POPULAR', proveedor:'Holafly', desc:'Ideal para Berlín, Múnich y toda Alemania.' },
+  ],
+  'eu-pt': [
+    { tag:'Corto', nombre:'PRT · 5', gb:'5 GB', dias:'15', precio:'9', red:'4G · NOS', badge:'', proveedor:'Airalo', desc:'Para una semana en Portugal.' },
+    { tag:'Recomendado', nombre:'PRT · 10', gb:'10 GB', dias:'30', precio:'16', red:'4G/5G · NOS', badge:'MÁS POPULAR', proveedor:'Holafly', desc:'El más elegido para Lisboa y Oporto.' },
+  ],
+  'eu-uk': [
+    { tag:'Corto', nombre:'GBR · 5', gb:'5 GB', dias:'15', precio:'12', red:'4G · EE UK', badge:'', proveedor:'Airalo', desc:'Perfecto para un viaje a Londres.' },
+    { tag:'Recomendado', nombre:'GBR · 10', gb:'10 GB', dias:'30', precio:'21', red:'4G/5G · EE UK', badge:'MÁS POPULAR', proveedor:'Holafly', desc:'El favorito para Reino Unido. Incluye Escocia e Irlanda del Norte.' },
+    { tag:'Trotamundos', nombre:'GBR · ∞', gb:'Ilimitado', dias:'30', precio:'36', red:'4G/5G · EE UK', badge:'', proveedor:'Holafly', desc:'Sin preocuparte por los GB durante todo tu viaje.' },
+  ],
+  'eu-gr': [
+    { tag:'Recomendado', nombre:'GRC · 5', gb:'5 GB', dias:'15', precio:'10', red:'4G · Cosmote', badge:'MÁS POPULAR', proveedor:'Airalo', desc:'Ideal para las islas griegas y Atenas.' },
+    { tag:'Plus', nombre:'GRC · 10', gb:'10 GB', dias:'30', precio:'17', red:'4G · Cosmote', badge:'', proveedor:'Holafly', desc:'Para viajes más largos por Grecia.' },
+  ],
+  'eu-nl': [
+    { tag:'Corto', nombre:'NLD · 5', gb:'5 GB', dias:'15', precio:'11', red:'4G · KPN', badge:'', proveedor:'Airalo', desc:'Para una semana en Ámsterdam.' },
+    { tag:'Recomendado', nombre:'NLD · 10', gb:'10 GB', dias:'30', precio:'18', red:'4G/5G · KPN', badge:'MÁS POPULAR', proveedor:'Holafly', desc:'El más elegido para los Países Bajos.' },
+  ],
+  /* ASIA */
+  'as-jp': [
+    { tag:'Escapada', nombre:'JPN · 3', gb:'3 GB', dias:'7', precio:'12', red:'4G · Docomo', badge:'', proveedor:'Airalo', desc:'Para una semana en Tokio con uso moderado.' },
+    { tag:'Recomendado', nombre:'JPN · 10', gb:'10 GB', dias:'30', precio:'22', red:'4G/LTE · Docomo', badge:'MÁS POPULAR', proveedor:'Holafly', desc:'El más vendido para Japón. Red Docomo, la mejor cobertura del país.' },
+    { tag:'Nómada', nombre:'JPN · ∞', gb:'Ilimitado', dias:'30', precio:'38', red:'4G/LTE · Docomo', badge:'', proveedor:'Holafly', desc:'Sin límites para explorar Japón de norte a sur.' },
+  ],
+  'as-th': [
+    { tag:'Corto', nombre:'THA · 5', gb:'5 GB', dias:'15', precio:'12', red:'4G · AIS', badge:'', proveedor:'Airalo', desc:'Para dos semanas en Tailandia.' },
+    { tag:'Recomendado', nombre:'THA · 10', gb:'10 GB', dias:'30', precio:'19', red:'4G · AIS', badge:'MÁS POPULAR', proveedor:'Holafly', desc:'El favorito para Bangkok, Chiang Mai y las islas.' },
+    { tag:'Sin límites', nombre:'THA · ∞', gb:'Ilimitado', dias:'30', precio:'32', red:'4G · AIS', badge:'', proveedor:'Holafly', desc:'Ideal si vas a moverte mucho y usas mapas constantemente.' },
+  ],
+  'as-id': [
+    { tag:'Corto', nombre:'IDN · 5', gb:'5 GB', dias:'15', precio:'11', red:'4G · Telkomsel', badge:'', proveedor:'Airalo', desc:'Para dos semanas en Bali o Jakarta.' },
+    { tag:'Recomendado', nombre:'IDN · 10', gb:'10 GB', dias:'30', precio:'18', red:'4G · Telkomsel', badge:'MÁS POPULAR', proveedor:'Holafly', desc:'El más elegido para Bali. Red Telkomsel, la mejor de Indonesia.' },
+  ],
+  'as-vn': [
+    { tag:'Recomendado', nombre:'VNM · 5', gb:'5 GB', dias:'15', precio:'10', red:'4G · Viettel', badge:'MÁS POPULAR', proveedor:'Airalo', desc:'Perfecto para recorrer Vietnam de norte a sur.' },
+    { tag:'Plus', nombre:'VNM · 10', gb:'10 GB', dias:'30', precio:'16', red:'4G · Viettel', badge:'', proveedor:'Holafly', desc:'Para viajes más largos o trabajo remoto desde Vietnam.' },
+  ],
+  'as-sg': [
+    { tag:'Corto', nombre:'SGP · 3', gb:'3 GB', dias:'7', precio:'9', red:'5G · Singtel', badge:'', proveedor:'Airalo', desc:'Para una semana en Singapur con uso normal.' },
+    { tag:'Recomendado', nombre:'SGP · 5', gb:'5 GB', dias:'15', precio:'14', red:'5G · Singtel', badge:'MÁS POPULAR', proveedor:'Holafly', desc:'El más elegido para Singapur. Red 5G de Singtel.' },
+  ],
+  'as-kr': [
+    { tag:'Corto', nombre:'KOR · 5', gb:'5 GB', dias:'15', precio:'13', red:'5G · SK Telecom', badge:'', proveedor:'Airalo', desc:'Para dos semanas en Corea del Sur.' },
+    { tag:'Recomendado', nombre:'KOR · 10', gb:'10 GB', dias:'30', precio:'21', red:'5G · SK Telecom', badge:'MÁS POPULAR', proveedor:'Holafly', desc:'El favorito para Seúl y Busan. Red 5G de primer nivel.' },
+    { tag:'Nómada', nombre:'KOR · ∞', gb:'Ilimitado', dias:'30', precio:'35', red:'5G · SK Telecom', badge:'', proveedor:'Holafly', desc:'Sin límites en uno de los países con mejor conectividad del mundo.' },
+  ],
+  'as-in': [
+    { tag:'Recomendado', nombre:'IND · 5', gb:'5 GB', dias:'15', precio:'10', red:'4G · Jio', badge:'MÁS POPULAR', proveedor:'Airalo', desc:'El más elegido para India. Cubre grandes ciudades y zonas turísticas.' },
+    { tag:'Plus', nombre:'IND · 10', gb:'10 GB', dias:'30', precio:'16', red:'4G · Jio', badge:'', proveedor:'Holafly', desc:'Para viajes más largos por India.' },
+  ],
+  /* AMÉRICA */
+  'am-us': [
+    { tag:'Corto', nombre:'USA · 5', gb:'5 GB', dias:'15', precio:'14', red:'5G · T-Mobile', badge:'', proveedor:'Airalo', desc:'Para dos semanas en EE.UU. con uso moderado.' },
+    { tag:'Recomendado', nombre:'USA · 10', gb:'10 GB', dias:'30', precio:'23', red:'5G · T-Mobile', badge:'MÁS POPULAR', proveedor:'Holafly', desc:'El más vendido para EE.UU. Red T-Mobile 5G en todo el país.' },
+    { tag:'Nómada', nombre:'USA · ∞', gb:'Ilimitado', dias:'30', precio:'39', red:'5G · T-Mobile', badge:'', proveedor:'Holafly', desc:'Sin límites para road trips y trabajo remoto en EE.UU.' },
+  ],
+  'am-mx': [
+    { tag:'Corto', nombre:'MEX · 3', gb:'3 GB', dias:'7', precio:'9', red:'4G · AT&T MX', badge:'', proveedor:'Airalo', desc:'Para una semana en México.' },
+    { tag:'Recomendado', nombre:'MEX · 5', gb:'5 GB', dias:'15', precio:'14', red:'4G · AT&T MX', badge:'MÁS POPULAR', proveedor:'Holafly', desc:'El favorito para Cancún, CDMX y la Riviera Maya.' },
+    { tag:'Plus', nombre:'MEX · 10', gb:'10 GB', dias:'30', precio:'20', red:'4G · AT&T MX', badge:'', proveedor:'Holafly', desc:'Para viajes más largos o trabajo remoto desde México.' },
+  ],
+  'am-co': [
+    { tag:'Recomendado', nombre:'COL · 5', gb:'5 GB', dias:'15', precio:'11', red:'4G · Claro', badge:'MÁS POPULAR', proveedor:'Airalo', desc:'Ideal para Bogotá, Medellín y Cartagena.' },
+    { tag:'Plus', nombre:'COL · 10', gb:'10 GB', dias:'30', precio:'17', red:'4G · Claro', badge:'', proveedor:'Holafly', desc:'Para viajes más largos por Colombia.' },
+  ],
+  'am-ar': [
+    { tag:'Recomendado', nombre:'ARG · 5', gb:'5 GB', dias:'15', precio:'12', red:'4G · Movistar', badge:'MÁS POPULAR', proveedor:'Airalo', desc:'Para Buenos Aires y las principales ciudades argentinas.' },
+    { tag:'Plus', nombre:'ARG · 10', gb:'10 GB', dias:'30', precio:'18', red:'4G · Movistar', badge:'', proveedor:'Holafly', desc:'Para viajes más largos por Argentina.' },
+  ],
+  'am-br': [
+    { tag:'Corto', nombre:'BRA · 5', gb:'5 GB', dias:'15', precio:'13', red:'4G · Claro BR', badge:'', proveedor:'Airalo', desc:'Para dos semanas en Brasil.' },
+    { tag:'Recomendado', nombre:'BRA · 10', gb:'10 GB', dias:'30', precio:'21', red:'4G · Claro BR', badge:'MÁS POPULAR', proveedor:'Holafly', desc:'El más elegido para Río, São Paulo y el Nordeste.' },
+  ],
+  'am-pe': [
+    { tag:'Recomendado', nombre:'PER · 5', gb:'5 GB', dias:'15', precio:'11', red:'4G · Claro PE', badge:'MÁS POPULAR', proveedor:'Airalo', desc:'Ideal para Lima, Cusco y Machu Picchu.' },
+    { tag:'Plus', nombre:'PER · 10', gb:'10 GB', dias:'30', precio:'17', red:'4G · Claro PE', badge:'', proveedor:'Holafly', desc:'Para viajes más largos por Perú.' },
+  ],
+  /* ORIENTE MEDIO / ÁFRICA */
+  'me-ae': [
+    { tag:'Corto', nombre:'ARE · 5', gb:'5 GB', dias:'7', precio:'13', red:'5G · Etisalat', badge:'', proveedor:'Airalo', desc:'Para una semana en Dubai o Abu Dhabi.' },
+    { tag:'Recomendado', nombre:'ARE · 10', gb:'10 GB', dias:'30', precio:'22', red:'5G · Etisalat', badge:'MÁS POPULAR', proveedor:'Holafly', desc:'El más elegido para los Emiratos. Red 5G de Etisalat.' },
+  ],
+  'me-tr': [
+    { tag:'Corto', nombre:'TUR · 5', gb:'5 GB', dias:'15', precio:'10', red:'4G · Turkcell', badge:'', proveedor:'Airalo', desc:'Para dos semanas en Turquía.' },
+    { tag:'Recomendado', nombre:'TUR · 10', gb:'10 GB', dias:'30', precio:'16', red:'4G · Turkcell', badge:'MÁS POPULAR', proveedor:'Holafly', desc:'Ideal para Estambul, Capadocia y las costas turcas.' },
+  ],
+  'af-ma': [
+    { tag:'Recomendado', nombre:'MAR · 5', gb:'5 GB', dias:'15', precio:'10', red:'4G · Maroc Telecom', badge:'MÁS POPULAR', proveedor:'Airalo', desc:'Para Marrakech, Fez y las ciudades imperiales.' },
+    { tag:'Plus', nombre:'MAR · 10', gb:'10 GB', dias:'30', precio:'16', red:'4G · Maroc Telecom', badge:'', proveedor:'Holafly', desc:'Para viajes más largos o el desierto del Sahara.' },
+  ],
+  'af-eg': [
+    { tag:'Recomendado', nombre:'EGY · 5', gb:'5 GB', dias:'15', precio:'10', red:'4G · Vodafone EG', badge:'MÁS POPULAR', proveedor:'Airalo', desc:'Para El Cairo, Luxor y las pirámides.' },
+    { tag:'Plus', nombre:'EGY · 10', gb:'10 GB', dias:'30', precio:'15', red:'4G · Vodafone EG', badge:'', proveedor:'Holafly', desc:'Para viajes más largos por Egipto.' },
+  ],
+  /* GLOBAL */
+  'gl-all': [
+    { tag:'Viajero frecuente', nombre:'GL · 10', gb:'10 GB', dias:'30', precio:'29', red:'4G · 190+ países', badge:'', proveedor:'Airalo', desc:'Una sola eSIM para todo el mundo. Perfecta para viajes con varias escalas.' },
+    { tag:'Recomendado', nombre:'GL · 20', gb:'20 GB', dias:'30', precio:'44', red:'4G/5G · 190+ países', badge:'MÁS POPULAR', proveedor:'Airalo', desc:'La opción más elegida por viajeros que van a varios países en un mismo viaje.' },
+    { tag:'Nómada digital', nombre:'GL · ∞', gb:'Ilimitado', dias:'30', precio:'69', red:'4G/5G · 190+ países', badge:'PREMIUM', proveedor:'Holafly', desc:'Sin límites en 190+ países. La eSIM definitiva para nómadas digitales.' },
+  ],
+};
+
+function buscarPlan() {
+  const dest = destSel.value;
+  const days = daysSel.value;
+  if (!dest || !days) {
+    const hint = document.getElementById('sel-hint');
+    hint.textContent = '⚠ Elige un destino y el número de días primero.';
+    hint.classList.add('active');
+    return;
+  }
+  renderPlanes(dest, days);
+  setTimeout(() => {
+    document.getElementById('planes-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
+}
+
+function renderPlanes(destKey, days) {
+  const d = dests[destKey];
+  const lista = planes[destKey] || planes['gl-all'];
+  const section = document.getElementById('planes-section');
+  const daysNum = parseInt(days);
+
+  /* Filtrar y ordenar según días */
+  let filtered = lista.filter(p => {
+    const planDias = parseInt(p.dias);
+    return planDias >= daysNum;
+  });
+  if (filtered.length === 0) filtered = lista; /* fallback: mostrar todos */
+
+  /* Header */
+  let html = `
+    <div class="planes-header">
+      <div class="planes-header-left">
+        <div class="planes-pretag">Resultados para tu búsqueda</div>
+        <div class="planes-titulo">${d.name} · ${days} días</div>
+        <div class="planes-sub">${filtered.length} plan${filtered.length > 1 ? 'es' : ''} disponible${filtered.length > 1 ? 's' : ''} — ordenados por mejor relación calidad-precio</div>
+      </div>
+      <button class="planes-back" onclick="cerrarPlanes()">← Cambiar destino</button>
+    </div>
+    <div class="planes-grid">
+  `;
+
+  filtered.forEach((p, i) => {
+    const isRecom = p.badge === 'MÁS POPULAR';
+    html += `
+      <div class="plan-card ${isRecom ? 'plan-featured' : ''}">
+        ${p.badge ? `<div class="plan-badge">${p.badge}</div>` : ''}
+        <div class="plan-card-top">
+          <div class="plan-tag">${p.tag}</div>
+          <div class="plan-proveedor">vía ${p.proveedor}</div>
+        </div>
+        <div class="plan-nombre">${p.nombre}</div>
+        <div class="plan-specs">
+          <div class="plan-spec"><span class="spec-val">${p.gb}</span><span class="spec-lbl">datos</span></div>
+          <div class="plan-spec-div"></div>
+          <div class="plan-spec"><span class="spec-val">${p.dias}d</span><span class="spec-lbl">validez</span></div>
+          <div class="plan-spec-div"></div>
+          <div class="plan-spec"><span class="spec-val red-tag">${p.red}</span><span class="spec-lbl">red</span></div>
+        </div>
+        <div class="plan-desc">${p.desc}</div>
+        <div class="plan-footer">
+          <div class="plan-precio"><span class="precio-num">${p.precio}€</span><span class="precio-unit">/viaje</span></div>
+          <button class="plan-cta ${isRecom ? 'plan-cta-featured' : ''}">Contratar →</button>
+        </div>
+        <div class="plan-check-row">
+          <span>✓ Activación instantánea</span>
+          <span>✓ Sin contrato</span>
+          <span>✓ Soporte 24h</span>
+        </div>
+      </div>
+    `;
+  });
+
+  html += `</div>`;
+
+  section.innerHTML = html;
+  section.classList.add('visible');
+}
+
+function cerrarPlanes() {
+  const section = document.getElementById('planes-section');
+  section.classList.remove('visible');
+  document.querySelector('.hero-selector-wrap').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function switchRegion(region, btn) {
+  document.querySelectorAll('.cob-region').forEach(r => r.classList.remove('active'));
+  document.querySelectorAll('.cob-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('region-' + region).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+<!-- BLOQUE 02 — PLANES (se despliega al buscar) -->
+<section id="planes-section"></section>
+
+<!-- BLOQUE 03 — CÓMO FUNCIONA -->
+<section class="como-section">
+
+  <div class="como-header">
+    <div class="como-pretag">— Proceso</div>
+    <h2 class="como-titulo">En 3 pasos,<br><em>listo para volar</em></h2>
+    <p class="como-sub">Sin ir a ninguna tienda. Sin esperar envíos. Todo desde tu móvil.</p>
+  </div>
+
+  <div class="como-steps">
+
+    <div class="como-step" data-step="01">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <div class="step-icon">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <rect x="8" y="4" width="24" height="32" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="20" cy="30" r="2" fill="currentColor"/>
+            <rect x="13" y="10" width="14" height="2" rx="1" fill="currentColor"/>
+            <rect x="13" y="15" width="10" height="2" rx="1" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="step-content">
+          <div class="step-tag">Elige tu plan</div>
+          <div class="step-title">Selecciona destino y días</div>
+          <div class="step-desc">Dinos a dónde vas y cuánto tiempo. Te mostramos los mejores planes de datos al instante — filtramos por cobertura, precio y red disponible en tu destino.</div>
+          <div class="step-detail">
+            <span>✓ Comparamos Holafly, Airalo y más</span>
+            <span>✓ Precio final sin letra pequeña</span>
+          </div>
+        </div>
+      </div>
+      <div class="step-connector">
+        <div class="connector-line"></div>
+        <div class="connector-arrow">↓</div>
+      </div>
+    </div>
+
+    <div class="como-step" data-step="02">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <div class="step-icon">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <rect x="6" y="6" width="28" height="28" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <rect x="11" y="11" width="8" height="8" fill="currentColor"/>
+            <rect x="21" y="11" width="8" height="8" fill="currentColor"/>
+            <rect x="11" y="21" width="8" height="8" fill="currentColor"/>
+            <rect x="23" y="23" width="4" height="4" fill="currentColor"/>
+            <rect x="21" y="21" width="2" height="2" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="step-content">
+          <div class="step-tag">Recibe tu eSIM</div>
+          <div class="step-title">QR en tu email al instante</div>
+          <div class="step-desc">Tras la compra recibes un código QR en tu correo. Lo escaneas con la cámara de tu móvil y la eSIM queda instalada en segundos. Sin SIM física, sin esperas.</div>
+          <div class="step-detail">
+            <span>✓ Compatible iPhone XS+ y Android</span>
+            <span>✓ Tu SIM actual sigue funcionando</span>
+          </div>
+        </div>
+      </div>
+      <div class="step-connector">
+        <div class="connector-line"></div>
+        <div class="connector-arrow">↓</div>
+      </div>
+    </div>
+
+    <div class="como-step" data-step="03">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <div class="step-icon">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M12 20 Q20 10 28 20 Q20 30 12 20Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <line x1="20" y1="6" x2="20" y2="34" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="6" y1="20" x2="34" y2="20" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="step-content">
+          <div class="step-tag">Viaja conectado</div>
+          <div class="step-title">Actívala al aterrizar</div>
+          <div class="step-desc">Enciende los datos de la eSIM al llegar a tu destino y listo — conectado en segundos. Sin pedir WiFi en el hotel, sin SIMs de aeropuerto, sin facturas de roaming.</div>
+          <div class="step-detail">
+            <span>✓ Activa y desactiva cuando quieras</span>
+            <span>✓ Soporte 24h si necesitas ayuda</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA intermedio -->
+  <div class="como-cta-wrap">
+    <div class="como-cta-inner">
+      <div class="como-cta-text">
+        <div class="como-cta-label">¿Listo para tu próximo viaje?</div>
+        <div class="como-cta-title">Elige tu destino y encuentra tu plan</div>
+      </div>
+      <button class="como-cta-btn" onclick="document.querySelector('.hero-selector-wrap').scrollIntoView({behavior:'smooth',block:'center'})">
+        Buscar mi plan →
+      </button>
+    </div>
+    <div class="como-cta-ref">REF · SIM·2025 · INSTANT·ACTIVATION · NO·ROAMING</div>
+  </div>
+
+</section>
+<!-- BLOQUE 04 — COBERTURA -->
+<section class="cob-section">
+
+  <div class="cob-header">
+    <div class="cob-header-left">
+      <div class="cob-pretag">Cobertura global</div>
+      <div class="cob-titulo">190+<br>PAÍSES</div>
+    </div>
+    <div class="cob-header-right">
+      <p class="cob-copy">Una sola eSIM para prácticamente cualquier destino del mundo. Selecciona una región para ver los países incluidos y los planes disponibles.</p>
+      <div class="cob-tabs" id="cob-tabs">
+        <button class="cob-tab active" data-region="europa" onclick="switchRegion('europa',this)">🌍 Europa</button>
+        <button class="cob-tab" data-region="asia" onclick="switchRegion('asia',this)">🌏 Asia</button>
+        <button class="cob-tab" data-region="america" onclick="switchRegion('america',this)">🌎 América</button>
+        <button class="cob-tab" data-region="medio" onclick="switchRegion('medio',this)">🕌 Oriente Medio</button>
+        <button class="cob-tab" data-region="africa" onclick="switchRegion('africa',this)">🌍 África</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cob-body">
+
+    <!-- REGION EUROPA -->
+    <div class="cob-region active" id="region-europa">
+      <div class="cob-region-stat">
+        <div class="cob-stat-num">40+</div>
+        <div class="cob-stat-lbl">países incluidos</div>
+      </div>
+      <div class="cob-paises">
+        <div class="cob-pais">🇩🇪 Alemania</div>
+        <div class="cob-pais">🇦🇹 Austria</div>
+        <div class="cob-pais">🇧🇪 Bélgica</div>
+        <div class="cob-pais">🇧🇬 Bulgaria</div>
+        <div class="cob-pais">🇨🇾 Chipre</div>
+        <div class="cob-pais">🇭🇷 Croacia</div>
+        <div class="cob-pais">🇩🇰 Dinamarca</div>
+        <div class="cob-pais">🇸🇰 Eslovaquia</div>
+        <div class="cob-pais">🇸🇮 Eslovenia</div>
+        <div class="cob-pais">🇪🇸 España</div>
+        <div class="cob-pais">🇪🇪 Estonia</div>
+        <div class="cob-pais">🇫🇮 Finlandia</div>
+        <div class="cob-pais">🇫🇷 Francia</div>
+        <div class="cob-pais">🇬🇷 Grecia</div>
+        <div class="cob-pais">🇭🇺 Hungría</div>
+        <div class="cob-pais">🇮🇪 Irlanda</div>
+        <div class="cob-pais">🇮🇸 Islandia</div>
+        <div class="cob-pais">🇮🇹 Italia</div>
+        <div class="cob-pais">🇱🇻 Letonia</div>
+        <div class="cob-pais">🇱🇮 Liechtenstein</div>
+        <div class="cob-pais">🇱🇹 Lituania</div>
+        <div class="cob-pais">🇱🇺 Luxemburgo</div>
+        <div class="cob-pais">🇲🇹 Malta</div>
+        <div class="cob-pais">🇳🇴 Noruega</div>
+        <div class="cob-pais">🇳🇱 Países Bajos</div>
+        <div class="cob-pais">🇵🇱 Polonia</div>
+        <div class="cob-pais">🇵🇹 Portugal</div>
+        <div class="cob-pais">🇷🇴 Rumanía</div>
+        <div class="cob-pais">🇸🇪 Suecia</div>
+        <div class="cob-pais">🇨🇭 Suiza</div>
+        <div class="cob-pais">🇬🇧 Reino Unido</div>
+        <div class="cob-pais">🇨🇿 Rep. Checa</div>
+        <div class="cob-pais cob-pais-more">+ 10 más →</div>
+      </div>
+      <div class="cob-region-cta">
+        <div class="cob-region-desde">Planes Europa desde <strong>9€</strong></div>
+        <button class="cob-region-btn" onclick="setDest('eu-eu','7')">Ver planes Europa →</button>
+      </div>
+    </div>
+
+    <!-- REGION ASIA -->
+    <div class="cob-region" id="region-asia">
+      <div class="cob-region-stat">
+        <div class="cob-stat-num">35+</div>
+        <div class="cob-stat-lbl">países incluidos</div>
+      </div>
+      <div class="cob-paises">
+        <div class="cob-pais">🇧🇩 Bangladesh</div>
+        <div class="cob-pais">🇰🇭 Camboya</div>
+        <div class="cob-pais">🇨🇳 China</div>
+        <div class="cob-pais">🇰🇷 Corea del Sur</div>
+        <div class="cob-pais">🇵🇭 Filipinas</div>
+        <div class="cob-pais">🇮🇳 India</div>
+        <div class="cob-pais">🇮🇩 Indonesia</div>
+        <div class="cob-pais">🇯🇵 Japón</div>
+        <div class="cob-pais">🇲🇾 Malasia</div>
+        <div class="cob-pais">🇲🇻 Maldivas</div>
+        <div class="cob-pais">🇲🇳 Mongolia</div>
+        <div class="cob-pais">🇲🇲 Myanmar</div>
+        <div class="cob-pais">🇳🇵 Nepal</div>
+        <div class="cob-pais">🇵🇰 Pakistán</div>
+        <div class="cob-pais">🇸🇬 Singapur</div>
+        <div class="cob-pais">🇱🇰 Sri Lanka</div>
+        <div class="cob-pais">🇹🇭 Tailandia</div>
+        <div class="cob-pais">🇹🇼 Taiwán</div>
+        <div class="cob-pais">🇻🇳 Vietnam</div>
+        <div class="cob-pais cob-pais-more">+ 16 más →</div>
+      </div>
+      <div class="cob-region-cta">
+        <div class="cob-region-desde">Planes Asia desde <strong>12€</strong></div>
+        <button class="cob-region-btn" onclick="setDest('as-jp','14')">Ver planes Asia →</button>
+      </div>
+    </div>
+
+    <!-- REGION AMERICA -->
+    <div class="cob-region" id="region-america">
+      <div class="cob-region-stat">
+        <div class="cob-stat-num">25+</div>
+        <div class="cob-stat-lbl">países incluidos</div>
+      </div>
+      <div class="cob-paises">
+        <div class="cob-pais">🇦🇷 Argentina</div>
+        <div class="cob-pais">🇧🇴 Bolivia</div>
+        <div class="cob-pais">🇧🇷 Brasil</div>
+        <div class="cob-pais">🇨🇦 Canadá</div>
+        <div class="cob-pais">🇨🇱 Chile</div>
+        <div class="cob-pais">🇨🇴 Colombia</div>
+        <div class="cob-pais">🇨🇷 Costa Rica</div>
+        <div class="cob-pais">🇨🇺 Cuba</div>
+        <div class="cob-pais">🇪🇨 Ecuador</div>
+        <div class="cob-pais">🇸🇻 El Salvador</div>
+        <div class="cob-pais">🇬🇹 Guatemala</div>
+        <div class="cob-pais">🇭🇳 Honduras</div>
+        <div class="cob-pais">🇲🇽 México</div>
+        <div class="cob-pais">🇳🇮 Nicaragua</div>
+        <div class="cob-pais">🇵🇦 Panamá</div>
+        <div class="cob-pais">🇵🇾 Paraguay</div>
+        <div class="cob-pais">🇵🇪 Perú</div>
+        <div class="cob-pais">🇩🇴 Rep. Dominicana</div>
+        <div class="cob-pais">🇺🇸 Estados Unidos</div>
+        <div class="cob-pais">🇺🇾 Uruguay</div>
+        <div class="cob-pais">🇻🇪 Venezuela</div>
+        <div class="cob-pais cob-pais-more">+ 5 más →</div>
+      </div>
+      <div class="cob-region-cta">
+        <div class="cob-region-desde">Planes América desde <strong>14€</strong></div>
+        <button class="cob-region-btn" onclick="setDest('am-us','10')">Ver planes América →</button>
+      </div>
+    </div>
+
+    <!-- REGION ORIENTE MEDIO -->
+    <div class="cob-region" id="region-medio">
+      <div class="cob-region-stat">
+        <div class="cob-stat-num">15+</div>
+        <div class="cob-stat-lbl">países incluidos</div>
+      </div>
+      <div class="cob-paises">
+        <div class="cob-pais">🇦🇲 Armenia</div>
+        <div class="cob-pais">🇦🇿 Azerbaiyán</div>
+        <div class="cob-pais">🇧🇭 Baréin</div>
+        <div class="cob-pais">🇬🇪 Georgia</div>
+        <div class="cob-pais">🇮🇱 Israel</div>
+        <div class="cob-pais">🇯🇴 Jordania</div>
+        <div class="cob-pais">🇰🇼 Kuwait</div>
+        <div class="cob-pais">🇱🇧 Líbano</div>
+        <div class="cob-pais">🇴🇲 Omán</div>
+        <div class="cob-pais">🇶🇦 Qatar</div>
+        <div class="cob-pais">🇸🇦 Arabia Saudí</div>
+        <div class="cob-pais">🇹🇷 Turquía</div>
+        <div class="cob-pais">🇦🇪 Emiratos Árabes</div>
+        <div class="cob-pais cob-pais-more">+ 3 más →</div>
+      </div>
+      <div class="cob-region-cta">
+        <div class="cob-region-desde">Planes O. Medio desde <strong>13€</strong></div>
+        <button class="cob-region-btn" onclick="setDest('me-ae','7')">Ver planes O. Medio →</button>
+      </div>
+    </div>
+
+    <!-- REGION AFRICA -->
+    <div class="cob-region" id="region-africa">
+      <div class="cob-region-stat">
+        <div class="cob-stat-num">20+</div>
+        <div class="cob-stat-lbl">países incluidos</div>
+      </div>
+      <div class="cob-paises">
+        <div class="cob-pais">🇩🇿 Argelia</div>
+        <div class="cob-pais">🇧🇯 Benín</div>
+        <div class="cob-pais">🇧🇫 Burkina Faso</div>
+        <div class="cob-pais">🇨🇲 Camerún</div>
+        <div class="cob-pais">🇨🇮 Costa de Marfil</div>
+        <div class="cob-pais">🇪🇬 Egipto</div>
+        <div class="cob-pais">🇪🇹 Etiopía</div>
+        <div class="cob-pais">🇬🇭 Ghana</div>
+        <div class="cob-pais">🇰🇪 Kenia</div>
+        <div class="cob-pais">🇲🇦 Marruecos</div>
+        <div class="cob-pais">🇲🇺 Mauricio</div>
+        <div class="cob-pais">🇳🇬 Nigeria</div>
+        <div class="cob-pais">🇷🇼 Ruanda</div>
+        <div class="cob-pais">🇸🇳 Senegal</div>
+        <div class="cob-pais">🇿🇦 Sudáfrica</div>
+        <div class="cob-pais">🇹🇿 Tanzania</div>
+        <div class="cob-pais">🇹🇳 Túnez</div>
+        <div class="cob-pais">🇺🇬 Uganda</div>
+        <div class="cob-pais cob-pais-more">+ 5 más →</div>
+      </div>
+      <div class="cob-region-cta">
+        <div class="cob-region-desde">Planes África desde <strong>10€</strong></div>
+        <button class="cob-region-btn" onclick="setDest('af-ma','7')">Ver planes África →</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- GLOBAL BANNER -->
+  <div class="cob-global">
+    <div class="cob-global-left">
+      <div class="cob-global-tag">¿Vas a varios países?</div>
+      <div class="cob-global-title">Plan GLOBAL — 190+ países con una sola eSIM</div>
+    </div>
+    <div class="cob-global-right">
+      <div class="cob-global-precio">desde <strong>29€</strong></div>
+      <button class="cob-global-btn" onclick="setDest('gl-all','30')">Ver plan Global →</button>
+    </div>
+  </div>
+
+</section>
+
+<style>
+/* ── BLOQUE 04 — COBERTURA ── */
+.cob-section {
+  background: var(--sand);
+  border-top: 2px solid var(--black);
+}
+
+.cob-header {
+  display: grid; grid-template-columns: 280px 1fr;
+  border-bottom: 1px solid var(--sand-d);
+}
+.cob-header-left {
+  padding: 40px 40px;
+  border-right: 1px solid var(--sand-d);
+  background: var(--black);
+}
+.cob-pretag {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 10px;
+}
+.cob-titulo {
+  font-family: var(--display); font-size: 56px;
+  line-height: 0.9; text-transform: uppercase;
+  color: var(--white);
+}
+.cob-header-right {
+  padding: 32px 48px;
+  display: flex; flex-direction: column; justify-content: center; gap: 24px;
+}
+.cob-copy {
+  font-size: 14px; color: #666; line-height: 1.65; max-width: 460px;
+}
+.cob-tabs {
+  display: flex; flex-wrap: wrap; gap: 0;
+}
+.cob-tab {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--white); color: var(--gray);
+  border: 1px solid var(--sand-d); border-right: none;
+  padding: 9px 18px; cursor: pointer;
+  transition: all 0.15s;
+}
+.cob-tab:last-child { border-right: 1px solid var(--sand-d); }
+.cob-tab:hover { color: var(--black); border-color: var(--black); }
+.cob-tab.active {
+  background: var(--black); color: var(--white);
+  border-color: var(--black);
+}
+
+.cob-body { padding: 32px 48px; min-height: 260px; }
+
+.cob-region { display: none; }
+.cob-region.active { display: block; }
+
+.cob-region-stat {
+  display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px;
+}
+.cob-stat-num {
+  font-family: var(--display); font-size: 48px;
+  color: var(--green); line-height: 1;
+}
+.cob-stat-lbl {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray);
+}
+
+.cob-paises {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;
+}
+.cob-pais {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.06em; background: var(--white);
+  border: 1px solid var(--sand-d); padding: 6px 14px;
+  color: var(--black); transition: all 0.15s; cursor: default;
+}
+.cob-pais:hover { border-color: var(--green); color: var(--green); }
+.cob-pais-more {
+  background: transparent; border-style: dashed;
+  color: var(--green); cursor: pointer;
+}
+
+.cob-region-cta {
+  display: flex; align-items: center; gap: 24px;
+  padding-top: 20px; border-top: 1px solid var(--sand-d);
+}
+.cob-region-desde {
+  font-family: var(--mono); font-size: 12px;
+  letter-spacing: 0.1em; color: var(--gray);
+}
+.cob-region-desde strong { color: var(--green); font-size: 18px; }
+.cob-region-btn {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  background: var(--black); color: var(--white);
+  border: none; padding: 12px 24px; cursor: pointer;
+  transition: background 0.15s;
+}
+.cob-region-btn:hover { background: var(--green); }
+
+.cob-global {
+  background: var(--green); border-top: 2px solid var(--black);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 48px; gap: 24px;
+}
+.cob-global-tag {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.6); margin-bottom: 4px;
+}
+.cob-global-title {
+  font-family: var(--display); font-size: 22px;
+  text-transform: uppercase; color: var(--white);
+}
+.cob-global-right {
+  display: flex; align-items: center; gap: 24px;
+}
+.cob-global-precio {
+  font-family: var(--mono); font-size: 13px;
+  color: rgba(255,255,255,0.7); letter-spacing: 0.1em;
+}
+.cob-global-precio strong {
+  font-family: var(--display); font-size: 32px; color: var(--white);
+}
+.cob-global-btn {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  background: var(--white); color: var(--green);
+  border: none; padding: 14px 28px; cursor: pointer;
+  font-weight: 700; transition: all 0.15s; white-space: nowrap;
+}
+.cob-global-btn:hover { background: var(--black); color: var(--white); }
+
+@media (max-width: 860px) {
+  .cob-header { grid-template-columns: 1fr; }
+  .cob-header-left { border-right: none; padding: 28px 20px; }
+  .cob-header-right { padding: 24px 20px; }
+  .cob-body { padding: 24px 20px; }
+  .cob-global { flex-direction: column; align-items: flex-start; padding: 24px 20px; }
+  .cob-global-right { width: 100%; justify-content: space-between; }
+}
+</style>
+
+<!-- ══════════════════════════════════════════
+     BLOQUE 05 — RESEÑAS
+══════════════════════════════════════════ -->
+<section class="rev-section">
+
+  <div class="rev-header">
+    <div class="rev-header-left">
+      <div class="rev-pretag">Viajeros reales</div>
+      <div class="rev-titulo">LO QUE<br>DICEN</div>
+    </div>
+    <div class="rev-header-right">
+      <div class="rev-aggregate">
+        <div class="rev-agg-num">4.8</div>
+        <div class="rev-agg-right">
+          <div class="rev-stars">★★★★★</div>
+          <div class="rev-agg-sub">Media de +12.000 reseñas verificadas<br>en Holafly, Airalo y Trustpilot</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rev-grid">
+
+    <div class="rev-card">
+      <div class="rev-card-top">
+        <div class="rev-card-stars">★★★★★</div>
+        <div class="rev-card-via">vía Holafly</div>
+      </div>
+      <div class="rev-card-text">"Fui a Japón 3 semanas y la eSIM funcionó perfectamente desde que aterricé en Tokio. Sin esperas, sin buscar tiendas. Merece mucho la pena."</div>
+      <div class="rev-card-footer">
+        <div class="rev-card-avatar">MG</div>
+        <div class="rev-card-author">
+          <span class="rev-name">María G.</span>
+          <span class="rev-dest">✈ Japón · 21 días</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rev-card rev-card-dark">
+      <div class="rev-card-top">
+        <div class="rev-card-stars">★★★★★</div>
+        <div class="rev-card-via" style="border-color:#333;color:#888;">vía Airalo</div>
+      </div>
+      <div class="rev-card-text">"Viajé por 4 países de Asia en un mes y con el plan global no tuve que hacer nada. Una sola eSIM para todo. Es lo más cómodo que he probado."</div>
+      <div class="rev-card-footer">
+        <div class="rev-card-avatar" style="background:var(--green);">CR</div>
+        <div class="rev-card-author">
+          <span class="rev-name">Carlos R.</span>
+          <span class="rev-dest" style="color:#666;">✈ Asia · 30 días</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rev-card">
+      <div class="rev-card-top">
+        <div class="rev-card-stars">★★★★★</div>
+        <div class="rev-card-via">vía Holafly</div>
+      </div>
+      <div class="rev-card-text">"Llevaba años pagando tarifas de roaming absurdas. Con esto pagué 12€ para todo México y tuve datos ilimitados. No vuelvo a viajar sin eSIM."</div>
+      <div class="rev-card-footer">
+        <div class="rev-card-avatar">LP</div>
+        <div class="rev-card-author">
+          <span class="rev-name">Laura P.</span>
+          <span class="rev-dest">✈ México · 14 días</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rev-card">
+      <div class="rev-card-top">
+        <div class="rev-card-stars">★★★★★</div>
+        <div class="rev-card-via">vía Airalo</div>
+      </div>
+      <div class="rev-card-text">"Lo compré 10 minutos antes de embarcar y cuando llegué a Tailandia ya tenía datos. El proceso es increíblemente sencillo."</div>
+      <div class="rev-card-footer">
+        <div class="rev-card-avatar">AV</div>
+        <div class="rev-card-author">
+          <span class="rev-name">Andrés V.</span>
+          <span class="rev-dest">✈ Tailandia · 10 días</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rev-card">
+      <div class="rev-card-top">
+        <div class="rev-card-stars">★★★★☆</div>
+        <div class="rev-card-via">vía Holafly</div>
+      </div>
+      <div class="rev-card-text">"Muy buena cobertura en Dubai y los Emiratos. La atención al cliente respondió en menos de una hora cuando tuve una duda con la activación."</div>
+      <div class="rev-card-footer">
+        <div class="rev-card-avatar">SM</div>
+        <div class="rev-card-author">
+          <span class="rev-name">Sofía M.</span>
+          <span class="rev-dest">✈ Dubai · 7 días</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rev-card">
+      <div class="rev-card-top">
+        <div class="rev-card-stars">★★★★★</div>
+        <div class="rev-card-via">vía Airalo</div>
+      </div>
+      <div class="rev-card-text">"Para viajes de trabajo a EE.UU. es ideal. Siempre contrato el plan de 10GB y me sobra. Sin facturas sorpresa al volver."</div>
+      <div class="rev-card-footer">
+        <div class="rev-card-avatar">JT</div>
+        <div class="rev-card-author">
+          <span class="rev-name">Javier T.</span>
+          <span class="rev-dest">✈ EE.UU. · frecuente</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="rev-footer">
+    <div class="rev-footer-logos">
+      <span class="rev-logo-tag">Reseñas de</span>
+      <span class="rev-provider-badge">Holafly ★ 4.8</span>
+      <span class="rev-provider-badge">Airalo ★ 4.7</span>
+      <span class="rev-provider-badge">Trustpilot ★ 4.8</span>
+    </div>
+    <div class="rev-footer-note">Reseñas reales de usuarios verificados. Seleccionadas de entre las más recientes.</div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════
+     BLOQUE 06 — FAQ
+══════════════════════════════════════════ -->
+<section class="faq-section">
+
+  <div class="faq-header">
+    <div class="faq-pretag">Preguntas frecuentes</div>
+    <div class="faq-titulo">RESOLVEMOS<br>TUS DUDAS</div>
+    <p class="faq-copy">Las 6 preguntas que más nos hacen antes de comprar. Si la tuya no está aquí, escríbenos.</p>
+  </div>
+
+  <div class="faq-list">
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <span>¿Cómo sé si mi móvil es compatible con eSIM?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        La mayoría de smartphones desde 2018 en adelante son compatibles. En iPhone: XS, XR o posterior. En Android: Samsung Galaxy S20+, Google Pixel 3+, Xiaomi 12+, y muchos más. Para comprobarlo, ve a <strong>Ajustes → General → Información</strong> en iPhone, o <strong>Ajustes → Conexiones → Administrador de SIM</strong> en Android. Si ves la opción eSIM, tu móvil es compatible.
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <span>¿Cuándo tengo que activar la eSIM?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Puedes instalar el QR en tu móvil antes de salir, pero <strong>actívala cuando llegues a tu destino</strong>. De esta forma el contador de días empieza a correr desde que la usas por primera vez. No pierdas días de datos estando aún en casa.
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <span>¿Puedo hacer llamadas y enviar SMS con la eSIM?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Los planes que ofrecemos son <strong>solo de datos</strong>. Para llamadas y SMS puedes seguir usando tu SIM física de siempre — el móvil funciona con las dos a la vez. Para llamar, lo más práctico es usar WhatsApp, FaceTime o cualquier app de mensajería con los datos de tu eSIM.
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <span>¿Qué pasa si se me acaban los datos antes de tiempo?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Puedes <strong>comprar un plan adicional</strong> desde la app del proveedor en cualquier momento. Si vas a hacer un uso intensivo (streaming, trabajo remoto, videollamadas), te recomendamos los planes ilimitados para no tener que preocuparte.
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <span>¿Funciona la eSIM en zonas rurales o islas?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Depende del país y del proveedor. En destinos populares como Japón, Europa o EE.UU. la cobertura es excelente incluso en zonas rurales. En destinos más remotos la red puede ser más limitada. <strong>Cada plan indica la red local</strong> que utiliza para que puedas comprobarlo antes de comprar.
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <span>¿Es seguro comprar? ¿Qué pasa si hay algún problema?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Trabajamos con <strong>Holafly y Airalo</strong>, dos de los proveedores de eSIM más grandes y valorados del mundo, con millones de clientes y soporte 24/7 en español. El pago es seguro y recibes el QR al instante en tu email. Si hay cualquier incidencia, el soporte del proveedor te atiende en minutos.
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════
+     BLOQUE 07 — CTA FINAL
+══════════════════════════════════════════ -->
+<section class="cta-section">
+
+  <div class="cta-inner">
+    <div class="cta-left">
+      <div class="cta-pretag">No te quedes sin datos</div>
+      <div class="cta-titulo">TU PRÓXIMO<br>VIAJE,<br><em>CONECTADO</em></div>
+      <div class="cta-copy">Elige destino y encuentra tu plan en menos de 1 minuto. Sin registro, sin contratos, sin sorpresas.</div>
+    </div>
+    <div class="cta-right">
+      <div class="cta-selector">
+        <div class="cta-sel-label">¿A dónde viajas?</div>
+        <div class="cta-sel-row">
+          <select class="cta-sel-input" id="cta-dest">
+            <option value="">— Selecciona destino —</option>
+            <optgroup label="Europa">
+              <option value="eu-eu">Europa completa</option>
+              <option value="eu-fr">Francia</option>
+              <option value="eu-it">Italia</option>
+              <option value="eu-de">Alemania</option>
+              <option value="eu-uk">Reino Unido</option>
+            </optgroup>
+            <optgroup label="Asia">
+              <option value="as-jp">Japón</option>
+              <option value="as-th">Tailandia</option>
+              <option value="as-id">Indonesia · Bali</option>
+              <option value="as-sg">Singapur</option>
+              <option value="as-kr">Corea del Sur</option>
+            </optgroup>
+            <optgroup label="América">
+              <option value="am-us">Estados Unidos</option>
+              <option value="am-mx">México</option>
+              <option value="am-co">Colombia</option>
+              <option value="am-br">Brasil</option>
+            </optgroup>
+            <optgroup label="Oriente Medio">
+              <option value="me-ae">Dubai · Emiratos</option>
+              <option value="me-tr">Turquía</option>
+            </optgroup>
+            <optgroup label="Global">
+              <option value="gl-all">Todo el mundo</option>
+            </optgroup>
+          </select>
+          <select class="cta-sel-input" id="cta-days" style="border-left:none;">
+            <option value="">— Días —</option>
+            <option value="7">7 días</option>
+            <option value="14">14 días</option>
+            <option value="21">21 días</option>
+            <option value="30">30 días</option>
+            <option value="60">60 días</option>
+          </select>
+        </div>
+        <button class="cta-btn" onclick="ctaBuscar()">Buscar mi plan →</button>
+        <div class="cta-trust-row">
+          <span>✓ Activación instantánea</span>
+          <span>✓ Sin registro</span>
+          <span>✓ Soporte 24h</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-footer-bar">
+    <div class="cta-footer-mono">SIMPASS © 2025</div>
+    <div class="cta-footer-center">
+      <span>Destinos</span>
+      <span class="cta-sep">·</span>
+      <span>Planes</span>
+      <span class="cta-sep">·</span>
+      <span>Cómo funciona</span>
+      <span class="cta-sep">·</span>
+      <span>FAQ</span>
+      <span class="cta-sep">·</span>
+      <span>Aviso legal</span>
+      <span class="cta-sep">·</span>
+      <span>Privacidad</span>
+    </div>
+    <div class="cta-footer-mono">REF · ES·GLB·2025</div>
+  </div>
+
+</section>
+
+<style>
+/* ── BLOQUE 05 — RESEÑAS ── */
+.rev-section {
+  background: var(--white);
+  border-top: 2px solid var(--black);
+}
+.rev-header {
+  display: grid; grid-template-columns: 280px 1fr;
+  border-bottom: 1px solid var(--sand-d);
+}
+.rev-header-left {
+  padding: 40px; border-right: 1px solid var(--sand-d);
+}
+.rev-pretag {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 10px;
+}
+.rev-titulo {
+  font-family: var(--display); font-size: 52px;
+  line-height: 0.9; text-transform: uppercase;
+}
+.rev-header-right {
+  padding: 32px 48px; display: flex; align-items: center;
+}
+.rev-aggregate {
+  display: flex; align-items: center; gap: 20px;
+}
+.rev-agg-num {
+  font-family: var(--display); font-size: 80px;
+  line-height: 1; color: var(--green);
+}
+.rev-stars { font-size: 22px; color: #f5a623; margin-bottom: 6px; }
+.rev-agg-sub {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.1em; color: var(--gray);
+  line-height: 1.6; text-transform: uppercase;
+}
+.rev-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid var(--sand-d);
+}
+.rev-card {
+  padding: 28px 28px 24px;
+  border-right: 1px solid var(--sand-d);
+  border-bottom: 1px solid var(--sand-d);
+  display: flex; flex-direction: column; gap: 14px;
+  background: var(--white);
+}
+.rev-card:nth-child(3n) { border-right: none; }
+.rev-card:nth-child(4), .rev-card:nth-child(5), .rev-card:nth-child(6) { border-bottom: none; }
+.rev-card-dark { background: var(--black); color: var(--white); }
+.rev-card-top {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.rev-card-stars { font-size: 13px; color: #f5a623; }
+.rev-card-via {
+  font-family: var(--mono); font-size: 8px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  border: 1px solid var(--sand-d); padding: 2px 8px; color: var(--gray);
+}
+.rev-card-text {
+  font-size: 13px; line-height: 1.65; color: #444; flex: 1;
+  font-style: italic;
+}
+.rev-card-dark .rev-card-text { color: #aaa; }
+.rev-card-footer {
+  display: flex; align-items: center; gap: 12px;
+  padding-top: 12px; border-top: 1px solid var(--sand-d);
+}
+.rev-card-dark .rev-card-footer { border-top-color: #222; }
+.rev-card-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--black); color: var(--white);
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.rev-card-author {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.rev-name {
+  font-weight: 700; font-size: 12px;
+}
+.rev-dest {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.08em; color: var(--gray);
+}
+.rev-footer {
+  padding: 18px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--sand);
+}
+.rev-footer-logos { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.rev-logo-tag {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray);
+}
+.rev-provider-badge {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border: 1px solid var(--sand-d); padding: 4px 12px;
+  color: var(--black); background: var(--white);
+}
+.rev-footer-note {
+  font-family: var(--mono); font-size: 8px;
+  letter-spacing: 0.1em; color: var(--gray);
+  text-transform: uppercase;
+}
+
+/* ── BLOQUE 06 — FAQ ── */
+.faq-section {
+  background: var(--sand);
+  border-top: 2px solid var(--black);
+}
+.faq-header {
+  padding: 48px 48px 32px;
+  border-bottom: 1px solid var(--sand-d);
+  display: grid; grid-template-columns: auto 1fr 1fr;
+  align-items: end; gap: 32px;
+}
+.faq-pretag {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--green); grid-column: 1 / -1; margin-bottom: -16px;
+}
+.faq-titulo {
+  font-family: var(--display); font-size: 52px;
+  line-height: 0.9; text-transform: uppercase;
+}
+.faq-copy {
+  font-size: 14px; color: #666; line-height: 1.65;
+  max-width: 360px; padding-bottom: 4px;
+}
+.faq-list { border-bottom: 1px solid var(--sand-d); }
+.faq-item {
+  border-bottom: 1px solid var(--sand-d); cursor: pointer;
+  transition: background 0.15s;
+}
+.faq-item:last-child { border-bottom: none; }
+.faq-item:hover { background: var(--white); }
+.faq-item.open { background: var(--white); }
+.faq-q {
+  padding: 22px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 24px;
+}
+.faq-q span:first-child {
+  font-size: 15px; font-weight: 600; color: var(--black);
+}
+.faq-icon {
+  font-family: var(--mono); font-size: 20px; font-weight: 400;
+  color: var(--green); flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-a {
+  padding: 0 48px 0; max-height: 0; overflow: hidden;
+  font-size: 14px; color: #555; line-height: 1.7;
+  transition: max-height 0.35s ease, padding 0.2s ease;
+}
+.faq-item.open .faq-a { max-height: 300px; padding: 0 48px 24px; }
+
+/* ── BLOQUE 07 — CTA FINAL ── */
+.cta-section {
+  background: var(--black);
+  border-top: 2px solid var(--green);
+}
+.cta-inner {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 400px;
+}
+.cta-left {
+  padding: 56px 48px;
+  border-right: 1px solid #1a1a1a;
+  display: flex; flex-direction: column; justify-content: center; gap: 20px;
+}
+.cta-pretag {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--green);
+}
+.cta-titulo {
+  font-family: var(--display); font-size: clamp(48px, 6vw, 80px);
+  line-height: 0.9; text-transform: uppercase; color: var(--white);
+}
+.cta-titulo em { color: var(--green); font-style: normal; }
+.cta-copy {
+  font-size: 14px; color: #666; line-height: 1.65; max-width: 360px;
+}
+.cta-right {
+  padding: 56px 48px;
+  display: flex; align-items: center; justify-content: center;
+}
+.cta-selector { width: 100%; max-width: 400px; }
+.cta-sel-label {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: #555; margin-bottom: 12px;
+}
+.cta-sel-row { display: flex; margin-bottom: 0; }
+.cta-sel-input {
+  flex: 1; background: #111; border: 1px solid #333;
+  color: var(--white); height: 52px; padding: 0 14px;
+  font-family: var(--mono); font-size: 13px; font-weight: 700;
+  appearance: none; outline: none; cursor: pointer;
+  transition: border-color 0.15s;
+}
+.cta-sel-input:focus { border-color: var(--green); }
+.cta-btn {
+  width: 100%; margin-top: 0; height: 52px;
+  background: var(--green); color: var(--white);
+  border: none; border-top: none;
+  font-family: var(--mono); font-size: 12px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  cursor: pointer; transition: background 0.15s, letter-spacing 0.2s;
+  display: block;
+}
+.cta-btn:hover { background: #145538; letter-spacing: 0.2em; }
+.cta-trust-row {
+  display: flex; gap: 16px; margin-top: 14px; flex-wrap: wrap;
+}
+.cta-trust-row span {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.1em; text-transform: uppercase; color: #444;
+}
+.cta-footer-bar {
+  background: #050505; border-top: 1px solid #1a1a1a;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 48px;
+}
+.cta-footer-mono {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.16em; text-transform: uppercase; color: #333;
+}
+.cta-footer-center {
+  display: flex; gap: 12px; align-items: center;
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.1em; text-transform: uppercase; color: #444;
+}
+.cta-sep { color: #222; }
+
+@media (max-width: 860px) {
+  .rev-header { grid-template-columns: 1fr; }
+  .rev-header-left { border-right: none; padding: 28px 20px; }
+  .rev-header-right { padding: 20px; }
+  .rev-grid { grid-template-columns: 1fr; }
+  .rev-card { border-right: none; }
+  .rev-card:nth-child(n) { border-bottom: 1px solid var(--sand-d); }
+  .rev-footer { flex-direction: column; gap: 12px; padding: 20px; align-items: flex-start; }
+  .faq-header { grid-template-columns: 1fr; gap: 12px; padding: 28px 20px 20px; }
+  .faq-q { padding: 18px 20px; }
+  .faq-a { padding: 0 20px 0; }
+  .faq-item.open .faq-a { padding: 0 20px 20px; }
+  .cta-inner { grid-template-columns: 1fr; }
+  .cta-left { border-right: none; padding: 40px 20px 32px; }
+  .cta-right { padding: 0 20px 40px; }
+  .cta-footer-bar { flex-direction: column; gap: 10px; padding: 16px 20px; text-align: center; }
+  .cta-footer-center { flex-wrap: wrap; justify-content: center; }
+}
+</style>
+
+<script>
+/* ── FAQ toggle ── */
+function toggleFaq(item) {
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+/* ── CTA final buscar ── */
+function ctaBuscar() {
+  const dest = document.getElementById('cta-dest').value;
+  const days = document.getElementById('cta-days').value;
+  if (!dest || !days) {
+    alert('Elige un destino y los días primero.');
+    return;
+  }
+  document.getElementById('dest-select').value = dest;
+  document.getElementById('days-select').value = days;
+  renderPlanes(dest, days);
+  setTimeout(() => {
+    document.getElementById('planes-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
+}
+</script>
+
+</body>
+</html>
